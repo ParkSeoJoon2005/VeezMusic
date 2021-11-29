@@ -139,7 +139,7 @@ async def playlist(client, message):
         temp.append(t)
     now_playing = temp[0][0]
     by = temp[0][1].mention(style="md")
-    msg = "💡 **now playing** on {}".format(message.chat.title)
+    msg = "🎵**now playing** on {}".format(message.chat.title)
     msg += "\n\n• " + now_playing
     msg += "\n• Req By " + by
     temp.pop(0)
@@ -157,13 +157,13 @@ async def playlist(client, message):
 
 def updated_stats(chat, queue, vol=100):
     if chat.id in callsmusic.pytgcalls.active_calls:
-        stats = "⚙ settings for **{}**".format(chat.title)
+        stats = "⚙ Settings for **{}**".format(chat.title)
         if len(que) > 0:
             stats += "\n\n"
-            stats += "• volume: `{}%`\n".format(vol)
-            stats += "• song played: `{}`\n".format(len(que))
-            stats += "• now playing: **{}**\n".format(queue[0][0])
-            stats += "• request by: {}".format(queue[0][1].mention(style="md"))
+            stats += "• Volume: `{}%`\n".format(vol)
+            stats += "• Song played: `{}`\n".format(len(que))
+            stats += "• Now playing: **{}**\n".format(queue[0][0])
+            stats += "• Request by: {}".format(queue[0][1].mention(style="md"))
     else:
         stats = None
     return stats
@@ -183,7 +183,7 @@ def r_ply(type_):
                 InlineKeyboardButton("⏭", "skip"),
             ],
             [
-                InlineKeyboardButton("📖 PLAY-LIST", "playlist"),
+                InlineKeyboardButton("◇PLAY-LIST", "playlist"),
             ],
             [InlineKeyboardButton("🗑 Close", "cls")],
         ]
@@ -210,7 +210,7 @@ async def settings(client, message):
             await message.reply(stats, reply_markup=r_ply("play"))
     else:
         await message.reply(
-            "😕 **voice chat not found**\n\n» please turn on the voice chat first"
+            "😕 **Voice chat not found**\n\n»Please turn on the voice chat first"
         )
 
 
@@ -229,30 +229,30 @@ async def music_onoff(_, message):
         return
     if len(message.command) != 2:
         await message.reply_text(
-            "**• usage:**\n\n `/music on` & `/music off`"
+            "**•Usage:**\n\n `/music on` & `/music off`"
         )
         return
     status = message.text.split(None, 1)[1]
     message.chat.id
     if status in ("ON", "on", "On"):
-        lel = await message.reply("`processing...`")
+        lel = await message.reply("`Processing...`")
         if not message.chat.id in DISABLED_GROUPS:
-            await lel.edit("» **music player already turned on.**")
+            await lel.edit("» **Music player already turned on.**")
             return
         DISABLED_GROUPS.remove(message.chat.id)
-        await lel.edit(f"✅ **music player turned on**\n\n💬 `{message.chat.id}`")
+        await lel.edit(f"✅ **Music player turned on**\n\n💬 `{message.chat.id}`")
 
     elif status in ("OFF", "off", "Off"):
-        lel = await message.reply("`processing...`")
+        lel = await message.reply("`Processing...`")
 
         if message.chat.id in DISABLED_GROUPS:
-            await lel.edit("» **music player already turned off.**")
+            await lel.edit("» **Music player already turned off.**")
             return
         DISABLED_GROUPS.append(message.chat.id)
-        await lel.edit(f"✅ **music player turned off**\n\n💬 `{message.chat.id}`")
+        await lel.edit(f"✅ **Music player turned off**\n\n💬 `{message.chat.id}`")
     else:
         await message.reply_text(
-            "**• usage:**\n\n `/music on` & `/music off`"
+            "**• Usage:**\n\n `/music on` & `/music off`"
         )
 
 
@@ -262,9 +262,9 @@ async def p_cb(b, cb):
     keyboard = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("• Gʀᴏᴜᴘ", url=f"https://t.me/{GROUP_SUPPORT}"),
+                InlineKeyboardButton("Gʀᴏᴜᴘ", url=f"https://t.me/{GROUP_SUPPORT}"),
                 InlineKeyboardButton(
-                    "• Cʜᴀɴɴᴇʟ", url=f"https://t.me/{UPDATES_CHANNEL}"
+                    "Cʜᴀɴɴᴇʟ", url=f"https://t.me/{UPDATES_CHANNEL}"
                 ),
             ],
             [InlineKeyboardButton("🔙 Go Back", callback_data="menu")],
@@ -286,7 +286,7 @@ async def p_cb(b, cb):
             temp.append(t)
         now_playing = temp[0][0]
         by = temp[0][1].mention(style="md")
-        msg = "💡 **now playing** on {}".format(cb.message.chat.title)
+        msg = "**🎵Now playing** on {}".format(cb.message.chat.title)
         msg += "\n\n• " + now_playing
         msg += "\n• Req by " + by
         temp.pop(0)
@@ -338,7 +338,7 @@ async def m_cb(b, cb):
             ACTV_CALLS.append(int(x.chat_id))
         if int(chat_id) not in ACTV_CALLS:
             await cb.answer(
-                "userbot is not connected to voice chat.", show_alert=True
+                "Userbot is not connected to voice chat.", show_alert=True
             )
         else:
             await callsmusic.pytgcalls.pause_stream(chat_id)
@@ -353,7 +353,7 @@ async def m_cb(b, cb):
             ACTV_CALLS.append(int(x.chat_id))
         if int(chat_id) not in ACTV_CALLS:
             await cb.answer(
-                "userbot is not connected to voice chat.", show_alert=True
+                "Userbot is not connected to voice chat.", show_alert=True
             )
         else:
             await callsmusic.pytgcalls.resume_stream(chat_id)
@@ -366,13 +366,13 @@ async def m_cb(b, cb):
     elif type_ == "playlist":
         queue = que.get(cb.message.chat.id)
         if not queue:
-            await cb.message.edit("❌ **no music is currently playing**")
+            await cb.message.edit("❌ **No music is currently playing**")
         temp = []
         for t in queue:
             temp.append(t)
         now_playing = temp[0][0]
         by = temp[0][1].mention(style="md")
-        msg = "💡 **now playing** on {}".format(cb.message.chat.title)
+        msg = "🎵 **now playing** on {}".format(cb.message.chat.title)
         msg += "\n• " + now_playing
         msg += "\n• Req by " + by
         temp.pop(0)
@@ -998,7 +998,7 @@ async def ytplay(_, message: Message):
     for i in message.command[1:]:
         query += " " + str(i)
     print(query)
-    await lel.edit("🔄 **connecting to vc...**")
+    await lel.edit("🔄 **Connecting to vc...**")
     ydl_opts = {"format": "bestaudio/best"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
